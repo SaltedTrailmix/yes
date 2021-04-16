@@ -1,0 +1,86 @@
+#include<iostream>
+#include<stack>
+#include<string>
+#include<cstring>
+using namespace std;
+
+//Matching Brackets - Madison Clark
+
+//Should compare the current char, and pop out the char from the stack that include matching () or else it will reutnr as a false. 
+bool matchingBrackets(char a,char b){
+   bool result=false;
+   if(a=='[' && b==']')
+       result=true;
+       
+   else if(a=='{' && b=='}')
+       result=true;
+       
+   else if(a=='(' && b==')')
+       result=true;
+       
+   else if(a=='<' && b=='>')
+       result=true;
+       
+   return result;
+}
+
+//Function should check if the () is matching or not. 
+void check(string line){
+   int flag=1;
+   stack <char> s;
+   
+   //Should copy each line from char into the array.
+   char a[line.size()+1];
+   strcpy(a,line.c_str());
+  
+   for(int i=0;i<sizeof(a);i++){
+	   
+	   //if () are open, push into a stack,if closed than pop into stack and check if it macthes with alreaady there ().
+       if(a[i]=='{' || a[i]=='[' || a[i]=='<' || a[i]=='(')
+           s.push(a[i]);
+           
+      else if(a[i]=='}' || a[i]==']' || a[i]=='>' || a[i]==')'){
+           if(!s.empty()){
+                   char temp=s.top();
+                   s.pop();
+                   
+                   //() don't match, then make flag = 0.
+                //   if(!check(temp,a[i])){
+					 if(!matchingBrackets(temp,a[i])){
+                       flag=0;
+                   }
+           }
+           //stack empty + closed () = flag = 0	
+          else{
+               flag=0;
+           }
+      
+       }
+   }
+if(!s.empty()){
+           flag=0;
+   }
+  //if the flag is 1 then yay, its closed, if not then no
+   if(flag==1)
+       cout<<"1 ";
+   else
+       cout<<"0 ";
+}
+
+int main(){
+	
+cout << "Matching Brakcets - Madison Clark: ";
+  
+      int n;
+      cin>>n;
+      string line;
+      while(n>0){
+         getline(cin,line);
+         cin.ignore(); 
+         check(line);
+         n--;
+    }
+   return 0;
+}
+
+//Program end c: 
